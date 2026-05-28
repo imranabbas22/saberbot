@@ -33,6 +33,7 @@ function App() {
   const [showTimerWarn, setShowTimerWarn] = useState(false)
   const [showEula, setShowEula] = useState(false)
   const [eulaTab, setEulaTab] = useState('terms')
+  const [agreed, setAgreed] = useState(false)
   const messagesEndRef = useRef(null)
   const heartbeatRef = useRef(null)
   const timerRef = useRef(null)
@@ -45,6 +46,9 @@ function App() {
       if (!d.can_chat && d.requests_used > 0) setShowFeedback(true)
     }).catch(() => {})
   }, [sessionId])
+
+  // Reset agreement checkbox when EULA modal opens
+  useEffect(() => { if (showEula) setAgreed(false) }, [showEula])
 
   // Heartbeat + timer
   useEffect(() => {
@@ -91,6 +95,7 @@ function App() {
   }
 
   const acceptTerms = () => {
+    if (!agreed) return
     setTermsAccepted()
     setShowEula(false)
     setStep('chat')
@@ -208,10 +213,10 @@ function App() {
               </div>
               <div className="modal-footer">
                 <label className="agree-check">
-                  <input type="checkbox" id="agree-check" />
+                  <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />
                   <span>I have read and agree to the Terms of Use, Privacy Policy, and EULA</span>
                 </label>
-                <button className="btn-primary btn-lg" onClick={acceptTerms}>Accept & Continue</button>
+                <button className="btn-primary btn-lg" onClick={acceptTerms} disabled={!agreed} style={{opacity: agreed ? 1 : 0.5}}>Accept & Continue</button>
               </div>
             </div>
           </div>
