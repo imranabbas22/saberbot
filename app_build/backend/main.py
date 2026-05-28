@@ -45,6 +45,9 @@ from chat_engine import (
     strip_thinking, CITATION_SYSTEM_PROMPT,
 )
 
+# Max query length: ~1024 tokens (4 chars/token estimate)
+MAX_QUERY_CHARS = 4096
+
 # LLM client — Ollama or cloud API
 LLM_PROVIDER = cfg.LLM_PROVIDER
 if LLM_PROVIDER == "api":
@@ -207,6 +210,14 @@ async def chat_endpoint(request: ChatRequest):
         )
 
     query = request.query.strip()
+
+    # Enforce max query length (~1024 tokens)
+    if len(query) > MAX_QUERY_CHARS:
+        return ChatResponse(
+            response=f"Your query is too long ({len(query)} chars). Please keep it under {MAX_QUERY_CHARS} characters (~1024 tokens).",
+            mode="error",
+            model=state.llm_model,
+        )
 
     # Step 1: Analyze query
     analysis = analyze_query(query)
