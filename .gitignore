@@ -1,0 +1,39 @@
+# Environments
+venv/
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+*.egg
+
+# Node
+node_modules/
+app_build/frontend/node_modules/
+
+# Build output
+app_build/frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Production artifacts
+production_artifacts/
+
+# Agent files
+.agents/

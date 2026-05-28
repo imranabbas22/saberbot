@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-05-28T22:03:26.254309",
+  "total_questions": 134,
+  "total_elapsed_seconds": 2130.7,
+  "avg_time_per_question": 15.9,
+  "mode_distribution": {
+    "answer": 133,
+    "clarify_found": 1
+  },
+  "law_citations": 132,
+  "article_citations": 120,
+  "errors": 0,
+  "error_rate_pct": 0.0,
+  "results_file": "C:\\Users\\imran\\Documents\\UAE_RAG\\faithfulness_test_results.jsonl"
+}
