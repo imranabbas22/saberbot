@@ -188,7 +188,7 @@ function App() {
           </div>
         </section>
         <footer className="landing-footer">
-          <p>🤖 SaberBot · Built by Imran Khan · <a href="https://github.com/yourusername/saberbot" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>GitHub</a> · Portfolio Project · Not legal advice</p>
+          <p>🤖 SaberBot · Built by Imran Khan · <a href="https://github.com/imranabbas22/saberbot" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>GitHub</a> · Portfolio Project · Not legal advice</p>
         </footer>
 
         {showEula && (
