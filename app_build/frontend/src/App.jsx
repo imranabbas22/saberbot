@@ -214,7 +214,7 @@ function App() {
           </div>
         </section>
         <footer className="landing-footer">
-          <p>🤖 SaberBot · Built by Imran Khan · <a href="https://github.com/imranabbas22/saberbot" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>GitHub</a> · Portfolio Project · Not legal advice</p>
+          <p>🤖 SaberBot · Created by <a href="https://linkedin.com/in/syed-imran-abbas" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>Syed Imran Abbas</a> · <a href="https://github.com/imranabbas22/saberbot" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>GitHub</a> · Portfolio Project · Not legal advice</p>
         </footer>
 
         {showEula && (
@@ -310,7 +310,10 @@ function App() {
         </nav>
         <div className="sidebar-footer">
           <button className="back-btn" onClick={goToLanding}>← Back to Home</button>
-          <p>7,005 laws · Portfolio project · Not legal advice</p>
+          <p style={{fontSize:'10px', lineHeight:'1.4'}}>
+            Created by <a href="https://linkedin.com/in/syed-imran-abbas" target="_blank" rel="noopener noreferrer" style={{color:'#60a5fa'}}>Syed Imran Abbas</a><br/>
+            7,005 laws · Portfolio · Not legal advice
+          </p>
         </div>
       </aside>
 
