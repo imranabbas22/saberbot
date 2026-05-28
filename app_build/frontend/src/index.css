@@ -178,6 +178,25 @@ body {
   color: var(--text-muted);
 }
 
+.back-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+.back-btn:hover {
+  border-color: var(--border-light);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
 /* ---- Chat Area ---- */
 .main-content {
   flex: 1;

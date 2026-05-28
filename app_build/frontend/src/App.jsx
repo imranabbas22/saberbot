@@ -150,6 +150,27 @@ function App() {
   const toggleSources = (idx) => setExpandedSources(p => ({ ...p, [idx]: !p[idx] }))
   const handleKeyDown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }
 
+  const goToLanding = () => {
+    setStep('landing')
+    setMessages([])
+    setInput('')
+    setLoading(false)
+    setExpandedSources({})
+  }
+
+  const startChat = () => {
+    if (hasAcceptedTerms()) {
+      setStep('chat')
+      setMessages([{
+        role: 'assistant',
+        content: '# 🤖 Welcome to SaberBot\n\nYour UAE law guide. Ask any question about UAE federal laws — labor, tax, criminal, family, business, and more.\n\n**Important:** This is an educational AI tool. Always verify with a qualified UAE lawyer for legal decisions.\n\nYou have **5 free queries**. Session will timeout after **3 minutes of inactivity**.',
+        sources: [],
+      }])
+    } else {
+      setShowEula(true)
+    }
+  }
+
   // ---- Landing Page ----
   if (step === 'landing') {
     return (
@@ -159,7 +180,7 @@ function App() {
             <span className="logo-text-lg">🤖 SaberBot</span>
             <div className="nav-links">
               <button className="nav-link" onClick={() => setShowEula(true)}>Legal</button>
-              <button className="btn-primary" onClick={() => setShowEula(true)}>Get Started</button>
+              <button className="btn-primary" onClick={startChat}>Get Started</button>
             </div>
           </div>
         </nav>
@@ -173,7 +194,7 @@ function App() {
               Zero data retention. No legal advice — just legal information to guide your research.
             </p>
             <div className="hero-actions">
-              <button className="btn-primary btn-lg" onClick={() => setShowEula(true)}>
+              <button className="btn-primary btn-lg" onClick={startChat}>
                 Try SaberBot →
               </button>
             </div>
@@ -287,7 +308,10 @@ function App() {
             <button className="nav-link" onClick={() => setShowEula(true)}>Terms · Privacy · EULA</button>
           </div>
         </nav>
-        <div className="sidebar-footer"><p>7,005 laws · Portfolio project · Not legal advice</p></div>
+        <div className="sidebar-footer">
+          <button className="back-btn" onClick={goToLanding}>← Back to Home</button>
+          <p>7,005 laws · Portfolio project · Not legal advice</p>
+        </div>
       </aside>
 
       <main className="main-content">
