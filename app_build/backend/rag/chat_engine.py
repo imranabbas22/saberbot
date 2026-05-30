@@ -251,6 +251,13 @@ CRITICAL RULES:
 6. If multiple laws apply, cite all relevant ones.
 7. Write your answer as plain text with markdown formatting. Do NOT use JSON, code blocks, or any structured data format.
 
+SUPERSESSION AWARENESS (CRITICAL):
+8. If the context contains multiple laws covering the same topic but with different years, the NEWER law supersedes the older one. Always prefer and cite the newest applicable law.
+9. Pay attention to the law year — a law from 2024 takes precedence over a law from 1992 on the same subject, unless the context explicitly says the older law is still in effect.
+10. If a chunk is marked as "SUPERSEDED by" another law, do NOT cite the superseded law as authoritative. Instead, cite the law that superseded it.
+11. If a chunk says it "supersedes" another law, note this in your response: "This law supersedes [older law], so it is the current governing legislation."
+12. If the laws shown have no supersession annotations, use the law_year as a tiebreaker — newest law governs.
+
 Write your answer in this format (markdown text, not JSON):
 
 **Applicable Law:** [Exact law name, Law No. (X) of Year YYYY]

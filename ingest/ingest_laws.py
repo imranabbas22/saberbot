@@ -107,6 +107,47 @@ def detect_article(text: str):
 
 
 # ---------------------------------------------------------
+# SUPERSESSION DETECTION FROM LAW TEXT
+# ---------------------------------------------------------
+
+SUPERSEDES_PATTERNS = [
+    re.compile(r"(?:supersedes?|replaces?|abrogates?|repeals?|cancels?|revokes?|annuls?|overrides?)"
+               r"\s+(?:the\s+)?(?:provisions\s+of\s+)?"
+               r"(?:Federal\s+)?(?:Decree[-\s])?(?:Law|Resolution|Decision|Order|Decree)"
+               r"(?:\s+No\.?\s*\(?(\d+)\)?)?"
+               r"(?:\s+of\s+(?:the\s+year\s+)?(\d{4}))?",
+               re.IGNORECASE),
+    re.compile(r"(?:Federal\s+)?(?:Decree[-\s])?(?:Law|Resolution|Decision|Order|Decree)"
+               r"(?:\s+No\.?\s*\(?(\d+)\)?)?"
+               r"(?:\s+of\s+(?:the\s+year\s+)?(\d{4}))?"
+               r"\s+(?:is\s+(?:hereby\s+)?)?(?:superseded|replaced|abrogated|repealed|cancelled|revoked|annulled)",
+               re.IGNORECASE),
+]
+
+
+def parse_supersession_from_text(text: str) -> list:
+    """
+    Parse supersession declarations from the beginning of a law's text.
+
+    Returns a list of (superseded_law_number, superseded_law_year) tuples.
+    """
+    # Only scan first 3000 chars — supersession declarations are in Article 1
+    head = text[:3000]
+    findings = []
+
+    for pattern in SUPERSEDES_PATTERNS:
+        for match in pattern.finditer(head):
+            num_str = match.group(1)
+            year_str = match.group(2)
+            num = int(num_str) if num_str else None
+            year = int(year_str) if year_str else None
+            if year is not None:
+                findings.append((num, year))
+
+    return findings
+
+
+# ---------------------------------------------------------
 # CHUNKING
 # ---------------------------------------------------------
 
@@ -197,6 +238,20 @@ def main():
             continue
 
         cleaned = clean_text(raw_text)
+
+        # Parse supersession from full law text (before chunking)
+        supersession_info = parse_supersession_from_text(cleaned)
+        if supersession_info:
+            supersedes_strs = []
+            for sup_num, sup_year in supersession_info:
+                if sup_num:
+                    supersedes_strs.append(f"Law No. {sup_num} of {sup_year}")
+                else:
+                    supersedes_strs.append(f"Law of {sup_year}")
+            print(f"  -> Supersession detected: {', '.join(supersedes_strs)}")
+        else:
+            print("  -> No supersession language detected in text")
+
         chunks = chunk_text(cleaned)
 
         print(f"  -> {len(chunks)} chunk(s)")
@@ -218,6 +273,10 @@ def main():
                 "lang": "en",
                 "chunk_index": str(i),
                 "article": str(detect_article(chunk)) if detect_article(chunk) is not None else "",
+                "supersedes": "; ".join(
+                    f"Law No. {n} of {y}" if n else f"Law of {y}"
+                    for n, y in supersession_info
+                ) if supersession_info else "",
             }
             metadatas.append(meta_clean)
 
